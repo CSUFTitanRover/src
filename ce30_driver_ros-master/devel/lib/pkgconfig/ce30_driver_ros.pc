@@ -1,0 +1,8 @@
+prefix=/home/skrapmi/Desktop/ce30_driver_ros-master/devel
+
+Name: ce30_driver_ros
+Description: Description of ce30_driver_ros
+Version: 0.0.0
+Cflags: 
+Libs: -L/home/skrapmi/Desktop/ce30_driver_ros-master/devel/lib 
+Requires: 
