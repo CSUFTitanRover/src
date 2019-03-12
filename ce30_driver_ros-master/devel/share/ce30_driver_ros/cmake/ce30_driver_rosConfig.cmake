@@ -67,8 +67,8 @@ set(ce30_driver_ros_CONFIG_INCLUDED TRUE)
 
 # set variables for source/devel/install prefixes
 if("TRUE" STREQUAL "TRUE")
-  set(ce30_driver_ros_SOURCE_PREFIX /home/skrapmi/Desktop/ce30_driver_ros-master)
-  set(ce30_driver_ros_DEVEL_PREFIX /home/skrapmi/Desktop/ce30_driver_ros-master/devel)
+  set(ce30_driver_ros_SOURCE_PREFIX /home/nvidia/catkin_ws/src/ce30_driver_ros-master)
+  set(ce30_driver_ros_DEVEL_PREFIX /home/nvidia/catkin_ws/src/ce30_driver_ros-master/devel)
   set(ce30_driver_ros_INSTALL_PREFIX "")
   set(ce30_driver_ros_PREFIX ${ce30_driver_ros_DEVEL_PREFIX})
 else()
@@ -110,7 +110,7 @@ if(NOT " " STREQUAL " ")
         message(FATAL_ERROR "Project 'ce30_driver_ros' specifies '${idir}' as an include dir, which is not found.  It does not exist in '${include}'.  ${_report}")
       endif()
     else()
-      message(FATAL_ERROR "Project 'ce30_driver_ros' specifies '${idir}' as an include dir, which is not found.  It does neither exist as an absolute directory nor in '/home/skrapmi/Desktop/ce30_driver_ros-master/${idir}'.  ${_report}")
+      message(FATAL_ERROR "Project 'ce30_driver_ros' specifies '${idir}' as an include dir, which is not found.  It does neither exist as an absolute directory nor in '/home/nvidia/catkin_ws/src/ce30_driver_ros-master/${idir}'.  ${_report}")
     endif()
     _list_append_unique(ce30_driver_ros_INCLUDE_DIRS ${include})
   endforeach()
@@ -129,7 +129,7 @@ foreach(library ${libraries})
     set(lib_path "")
     set(lib "${library}-NOTFOUND")
     # since the path where the library is found is returned we have to iterate over the paths manually
-    foreach(path /home/skrapmi/Desktop/ce30_driver_ros-master/devel/lib;/opt/ros/kinetic/lib)
+    foreach(path /home/nvidia/catkin_ws/src/ce30_driver_ros-master/devel/lib;/home/nvidia/catkin_ws/devel/lib;/opt/ros/kinetic/lib)
       find_library(lib ${library}
         PATHS ${path}
         NO_DEFAULT_PATH NO_CMAKE_FIND_ROOT_PATH)

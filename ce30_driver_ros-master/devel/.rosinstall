@@ -1,2 +1,2 @@
 - setup-file:
-    local-name: /home/skrapmi/Desktop/ce30_driver_ros-master/devel/setup.sh
+    local-name: /home/nvidia/catkin_ws/src/ce30_driver_ros-master/devel/setup.sh

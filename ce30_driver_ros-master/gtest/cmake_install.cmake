@@ -34,7 +34,7 @@ endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for each subdirectory.
-  include("/home/skrapmi/Desktop/ce30_driver_ros-master/gtest/gtest/cmake_install.cmake")
+  include("/home/nvidia/catkin_ws/src/ce30_driver_ros-master/gtest/gtest/cmake_install.cmake")
 
 endif()
 

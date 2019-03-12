@@ -3,7 +3,7 @@
 
 # Relative path conversion top directories.
 set(CMAKE_RELATIVE_PATH_TOP_SOURCE "/usr/src/gmock")
-set(CMAKE_RELATIVE_PATH_TOP_BINARY "/home/skrapmi/Desktop/ce30_driver_ros-master")
+set(CMAKE_RELATIVE_PATH_TOP_BINARY "/home/nvidia/catkin_ws/src/ce30_driver_ros-master")
 
 # Force unix paths in dependencies.
 set(CMAKE_FORCE_UNIX_PATHS 1)

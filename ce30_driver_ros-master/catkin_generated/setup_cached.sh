@@ -7,6 +7,6 @@
 # new environment variables
 
 # modified environment variables
-export CMAKE_PREFIX_PATH="/home/skrapmi/Desktop/ce30_driver_ros-master/devel:$CMAKE_PREFIX_PATH"
-export ROSLISP_PACKAGE_DIRECTORIES="/home/skrapmi/Desktop/ce30_driver_ros-master/devel/share/common-lisp"
-export ROS_PACKAGE_PATH="/home/skrapmi/Desktop/ce30_driver_ros-master:$ROS_PACKAGE_PATH"
+export CMAKE_PREFIX_PATH="/home/nvidia/catkin_ws/src/ce30_driver_ros-master/devel:$CMAKE_PREFIX_PATH"
+export ROSLISP_PACKAGE_DIRECTORIES="/home/nvidia/catkin_ws/src/ce30_driver_ros-master/devel/share/common-lisp:$ROSLISP_PACKAGE_DIRECTORIES"
+export ROS_PACKAGE_PATH="/home/nvidia/catkin_ws/src/ce30_driver_ros-master:$ROS_PACKAGE_PATH"

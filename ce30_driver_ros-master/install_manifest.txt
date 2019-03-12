@@ -1,0 +1,12 @@
+/usr/local/_setup_util.py
+/usr/local/env.sh
+/usr/local/setup.bash
+/usr/local/setup.sh
+/usr/local/setup.zsh
+/usr/local/.rosinstall
+/usr/local/lib/pkgconfig/ce30_driver_ros.pc
+/usr/local/share/ce30_driver_ros/cmake/ce30_driver_rosConfig.cmake
+/usr/local/share/ce30_driver_ros/cmake/ce30_driver_rosConfig-version.cmake
+/usr/local/share/ce30_driver_ros/package.xml
+/usr/local/lib/ce30_driver_ros/ce30_driver_ros_node
+/usr/local/share/ce30_driver_ros/launch/static_demo.launch
