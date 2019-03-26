@@ -129,6 +129,7 @@ try:
         ps.header = i.header
 
         i.yaw.yaw = heading
+        i.yaw.pitch = pitch
 
         # Other values you can optionally read:
         # Orientation as a quaternion:
