@@ -1,0 +1,7 @@
+<launch>
+<node pkg="master_discovery_fkie" type="master_discovery" name="sync_stats"/>
+  <param name="_mcast_group" value="224.0.0.251" />
+<node pkg="master_sync_fkie" type="master_sync" name="master_sync"/>
+<node pkg="finalimu" type="cal_run_Imu.py" name="imu"/>
+<node pkg="gnss" type="reach.py" name="gnss"/>
+</launch>
