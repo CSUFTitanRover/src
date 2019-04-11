@@ -11,24 +11,23 @@ global rover
 def connect():
     global base_gps, rover
     # connect to the Base Reach
-    base = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    while True:
-        try:
-            base.connect(('base_tr.local', 9092))
-            data = base.recv(256).split(" ")
-            base_gps = (data[4], data[5])
-            base.close()
-            break
-        except:
-            print("Connecting to Base Reach")
-            time.sleep(2)
+  #  base = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+#    while True:
+ #       try:
+  #          base.connect(('base_tr.local', 9092))
+   #         data = base.recv(256).split(" ")
+    #        base_gps = (data[4], data[5])
+     #       base.close()
+      #      break
+       # except:
+        #    print("Connecting to Base Reach")
+         #   time.sleep(2)
 
     # connect to the Rover Reach
-    print "cocksucker"
     rover = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     while True:
         try:
-            rover.connect(('rover_tr.local', 9091))
+            rover.connect((, 9091))
             break
         except:
             print("Connecting to Rover Reach")
