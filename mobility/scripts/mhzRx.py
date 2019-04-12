@@ -105,4 +105,4 @@ if __name__ == '__main__':
     try:
         monitor()
     except rospy.ROSInterruptException:
-        pass
+        quit()
