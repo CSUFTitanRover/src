@@ -49,7 +49,7 @@ telem.armAttached = True
 
 #global variables
 last_mode = telem.mode
-last_active = 0
+last_active = last_throttle_change = 0
 #axes and buttons
 a1, a2, a3, a4, a5, a6, b1, b2, b3, b4, b5, b6, b7, b8, b9, b10, b11, b12
 def setStop():
@@ -108,23 +108,21 @@ def isActive(msg_data):
 
 
 def main(data):
-    global telem, last_active, last_mode, a1, a2, a3, a4, a5, a6, b1, b2, b3, b4, b5, b6, b7, b8, b9, b10, b11, b12
+    global telem, last_active, last_throttle_change, last_mode, a1, a2, a3, a4, a5, a6, b1, b2, b3, b4, b5, b6, b7, b8, b9, b10, b11, b12
     setVals(data)
-    #wake from sleep
+    telem.source = data.source
+
+    #wake from idle or set mode to idle
     if isActive(data):
         last_active = data.header.stamp
         if telem.mode == IDLE:
             telem.mode = last_mode 
-
-    telem.source = data.source
-    if telem.source == 3:
-        telem.mode = MOBILITY
-    #go to sleep if time and save the last used mode other than idle
-    if (rospy.Time.now() - last_active) > rospy.Duration(IDLE_TIMEOUT):
+    elif (rospy.Time.now() - last_active) > rospy.Duration(IDLE_TIMEOUT):
         if (telem.mode != IDLE):
             last_mode = telem.mode
         telem.mode = IDLE
         telem_pub.publish(telem)
+
     #set mode
     if(b9):
         if(b3):
@@ -133,20 +131,20 @@ def main(data):
             telem.mode = MOBILITY
         elif(b4):
             telem.mode = ARM
+            setStop()
         elif(b1):
             telem.mode = BOTH
         telem_pub.publish(telem)
-    else:#single key presses for throttle
-        if(b4 and (telem.throttle < 1) and ((rospy.Time.now() - last_active) > rospy.Duration(0.25))):
+    else:
+        #single key presses for throttle
+        if(b4 and (telem.throttle < 1) and ((rospy.Time.now() - last_throttle_change) > rospy.Duration(0.25))):
             telem.throttle += 0.1
-            last_active = rospy.Time.now()
-        elif (b2 and (telem.throttle > .3) and ((rospy.Time.now() - last_active) > rospy.Duration(0.25))):
+            last_throttle_change = rospy.Time.now()
+        elif (b2 and (telem.throttle > .3) and ((rospy.Time.now() - last_throttle_change) > rospy.Duration(0.25))):
             telem.throttle -= 0.1
-            last_active = rospy.Time.now()
+            last_throttle_change = rospy.Time.now()
         telem_pub.publish(telem)
         try:
-            print(telem)
-            telem_pub.publish(telem)
             if telem.mode in {MOBILITY, BOTH}:
                 #turn in place
                 if b1:
@@ -169,7 +167,7 @@ def main(data):
 if __name__ == '__main__':
     try:
         rospy.init_node('rover_mobility', anonymous=True)
-        last_active = rospy.Time.now()
+        last_active = last_throttle_change = rospy.Time.now()
         telem_pub = rospy.Publisher("telemetry", Status, queue_size=1)
         rospy.Subscriber("/multijoy", MultiJoy, main)
 
