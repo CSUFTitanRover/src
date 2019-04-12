@@ -23,7 +23,7 @@ s.bind((host, port))
 
 def getRF(size_of_payload): #added argument to make it more function-like
     try:
-        rf_uart = serial.Serial("/dev/serial/by-id/usb-Silicon_Labs_Rover433_0001-if00-port0", 19200, timeout=None)
+        rf_uart = serial.Serial("/dev/serial/by-id/usb-Silicon_Labs_Rover433_0001-if00-port0", 19200, timeout=0.25)
         rf_uart.setDTR(True) #if the extra pins on the ttl usb are connected to m0 & m1 on the ebyte module
         rf_uart.setRTS(True) #then these two lines will send low logic to both which puts the module in transmit mode 0
         while True:
