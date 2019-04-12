@@ -10,7 +10,7 @@ import rospy, subprocess, sys
 from multijoy.msg import MultiJoy
 from mobility.msg import Status
 from sensor_msgs.msg import Joy
-
+last_active = 0
 # To import packages from different Directories
 rootDir = subprocess.check_output('locate TitanRover2019 | head -1', shell=True).strip().decode('utf-8')
 sys.path.insert(0, rootDir + '/build/resources/python-packages')
@@ -26,7 +26,7 @@ armMix = DriveEsc(129, "notMixed")
 IDLE_TIMEOUT = 15 #seconds
 #use actual button numbers instead of 0-indexed array
 b1, b2, b3, b4, b5, b6, b7, b8, b9, b10, b11, b12 = range(12)
-a1, a2, a3 = range(3)
+a1, a2, a3, a4, a5, a6 = range(6)
 
 #comms source for reference (variables not used)
 ERROR = -1
