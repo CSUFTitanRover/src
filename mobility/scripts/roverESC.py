@@ -144,6 +144,7 @@ def main(data):
             telem.throttle -= 0.1
             last_active = rospy.Time.now()
         else:
+            telem_pub.publish(telem)
             try:
                 print(telem)
                 telem_pub.publish(telem)
