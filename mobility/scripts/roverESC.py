@@ -53,25 +53,9 @@ last_active = 0
 #axes and buttons
 a1, a2, a3, a4, a5, a6, b1, b2, b3, b4, b5, b6, b7, b8, b9, b10, b11, b12
 def setStop(joy_data):
-    joy_data.joys[0].axes[0] = 0 
-    joy_data.joys[0].axes[1] = 0 
-    joy_data.joys[0].axes[2] = 0 
-    joy_data.joys[0].axes[3] = 0 
-    joy_data.joys[0].axes[4] = 0 
-    joy_data.joys[0].axes[5] = 0 
-    joy_data.joys[0].buttons[0] = 0 
-    joy_data.joys[0].buttons[1] = 0 
-    joy_data.joys[0].buttons[2] = 0 
-    joy_data.joys[0].buttons[3] = 0 
-    joy_data.joys[0].buttons[4] = 0 
-    joy_data.joys[0].buttons[5] = 0 
-    joy_data.joys[0].buttons[6] = 0 
-    joy_data.joys[0].buttons[7] = 0 
-    joy_data.joys[0].buttons[8] = 0 
-    joy_data.joys[0].buttons[9] = 0 
-    joy_data.joys[0].buttons[10] = 0
-    joy_data.joys[0].buttons[11] = 0
-    return joy_data
+    global a1, a2, a3, a4, a5, a6, b1, b2, b3, b4, b5, b6, b7, b8, b9, b10, b11, b12
+    a1, a2, a3, a4, a5, a6, b1, b2, b3, b4, b5, b6, b7, b8, b9, b10, b11, b12\
+        = 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
 
 def setVals(joy_data):
     global a1, a2, a3, a4, a5, a6, b1, b2, b3, b4, b5, b6, b7, b8, b9, b10, b11, b12
