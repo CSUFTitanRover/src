@@ -127,7 +127,6 @@ def main(data):
         telem_pub.publish(telem)
     #set mode
     if(b9):
-        setStop() #set no movement
         if(b3):
             telem.mode = PAUSE
         elif(b2):
