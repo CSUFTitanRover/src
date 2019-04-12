@@ -135,6 +135,7 @@ def main(data):
             telem.mode = ARM
         elif(b1):
             telem.mode = BOTH
+        telem_pub.publish(telem)
     else:#single key presses for throttle
         if(b4 and (telem.throttle < 1) and ((rospy.Time.now() - last_active) > rospy.Duration(0.25))):
             telem.throttle += 0.1
@@ -142,29 +143,28 @@ def main(data):
         elif (b2 and (telem.throttle > .3) and ((rospy.Time.now() - last_active) > rospy.Duration(0.25))):
             telem.throttle -= 0.1
             last_active = rospy.Time.now()
-        else:
+        telem_pub.publish(telem)
+        try:
+            print(telem)
             telem_pub.publish(telem)
-            try:
-                print(telem)
-                telem_pub.publish(telem)
-                if telem.mode in {MOBILITY, BOTH}:
-                    #turn in place
-                    if b1:
-                        wheels.driveBoth(0,-63)
-                    elif b3:
-                        wheels.driveBoth(0,63)
+            if telem.mode in {MOBILITY, BOTH}:
+                #turn in place
+                if b1:
+                    wheels.driveBoth(0,-63)
+                elif b3:
+                    wheels.driveBoth(0,63)
+                else:
+                    #normal movement
+                    if telem.source is 3:
+                        wheels.driveBoth(int(a2),int(a1))
                     else:
-                        #normal movement
-                        if telem.source is 3:
-                            wheels.driveBoth(int(a2),int(a1))
-                        else:
-                            wheels.driveBoth(int(telem.throttle*127*a2),int(-1 * telem.throttle*127*a1))
+                        wheels.driveBoth(int(telem.throttle*127*a2),int(-1 * telem.throttle*127*a1))
 
-                if telem.armAttached and telem.mode in {BOTH, ARM}:
-                    armMix.driveBoth(int(127*a3),int(127*a4))#j2, j3
-                    pyarm.armData(a5, a6, b5, b6, b7, b8) #j1, j4, j51, j52
-            except:
-                print("Mobility-main-drive error")
+            if telem.armAttached and telem.mode in {BOTH, ARM}:
+                armMix.driveBoth(int(127*a3),int(127*a4))#j2, j3
+                pyarm.armData(a5, a6, b5, b6, b7, b8) #j1, j4, j51, j52
+        except:
+            print("Mobility-main-drive error")
 
 if __name__ == '__main__':
     try:
