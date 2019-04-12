@@ -137,10 +137,10 @@ def main(data):
         telem_pub.publish(telem)
     else:
         #single key presses for throttle
-        if(b4 and (telem.throttle < 1) and ((rospy.Time.now() - last_throttle_change) > rospy.Duration(0.25))):
+        if(b4 and (telem.throttle < .95) and ((rospy.Time.now() - last_throttle_change) > rospy.Duration(0.25))):
             telem.throttle += 0.1
             last_throttle_change = rospy.Time.now()
-        elif (b2 and (telem.throttle > .3) and ((rospy.Time.now() - last_throttle_change) > rospy.Duration(0.25))):
+        elif (b2 and (telem.throttle > .25) and ((rospy.Time.now() - last_throttle_change) > rospy.Duration(0.25))):
             telem.throttle -= 0.1
             last_throttle_change = rospy.Time.now()
         telem_pub.publish(telem)
