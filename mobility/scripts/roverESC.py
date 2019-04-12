@@ -52,7 +52,7 @@ last_mode = telem.mode
 last_active = 0
 #axes and buttons
 a1, a2, a3, a4, a5, a6, b1, b2, b3, b4, b5, b6, b7, b8, b9, b10, b11, b12
-def setStop(joy_data):
+def setStop():
     global a1, a2, a3, a4, a5, a6, b1, b2, b3, b4, b5, b6, b7, b8, b9, b10, b11, b12
     a1, a2, a3, a4, a5, a6, b1, b2, b3, b4, b5, b6, b7, b8, b9, b10, b11, b12\
         = 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
@@ -127,7 +127,7 @@ def main(data):
         telem_pub.publish(telem)
     #set mode
     if(b9):
-        data = setStop(data) #set no movement
+        setStop() #set no movement
         if(b3):
             telem.mode = PAUSE
         elif(b2):
