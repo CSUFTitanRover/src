@@ -10,7 +10,6 @@ import rospy, subprocess, sys
 from multijoy.msg import MultiJoy
 from mobility.msg import Status
 from sensor_msgs.msg import Joy
-last_active = 0
 # To import packages from different Directories
 rootDir = subprocess.check_output('locate TitanRover2019 | head -1', shell=True).strip().decode('utf-8')
 sys.path.insert(0, rootDir + '/build/resources/python-packages')
@@ -50,7 +49,7 @@ telem.armAttached = True
 
 #global variables
 last_mode = telem.mode
-last_active
+last_active = 0
 #axes and buttons
 a1, a2, a3, a4, a5, a6, b1, b2, b3, b4, b5, b6, b7, b8, b9, b10, b11, b12
 def setStop(joy_data):
@@ -143,8 +142,8 @@ def main(data):
         telem.mode = IDLE
         telem_pub.publish(telem)
     #set mode
-    if(data.joys[0].buttons[b9]):
-        #data = setStop(data) #set no movement
+    if(b9):
+        data = setStop(data) #set no movement
         if(b3):
             telem.mode = PAUSE
         elif(b2):
