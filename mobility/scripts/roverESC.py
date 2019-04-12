@@ -78,34 +78,18 @@ def setVals(joy_data):
     b11 = joy_data.joys[0].buttons[10]
     b12 = joy_data.joys[0].buttons[11]
 
-def isActive(msg_data):
-    try:
-        if (abs(msg_data.joys[0].axes[0]) > 0 \
-        or abs(msg_data.joys[0].axes[1]) > 0 \
-        or abs(msg_data.joys[0].axes[2]) > 0 \
-        or abs(msg_data.joys[0].axes[3]) > 0 \
-        or abs(msg_data.joys[0].axes[4]) > 0 \
-        or abs(msg_data.joys[0].axes[5]) > 0 \
-        or abs(msg_data.joys[0].buttons[0]) > 0 \
-        or abs(msg_data.joys[0].buttons[1]) > 0 \
-        or abs(msg_data.joys[0].buttons[2]) > 0 \
-        or abs(msg_data.joys[0].buttons[3]) > 0 \
-        or abs(msg_data.joys[0].buttons[4]) > 0 \
-        or abs(msg_data.joys[0].buttons[5]) > 0 \
-        or abs(msg_data.joys[0].buttons[6]) > 0 \
-        or abs(msg_data.joys[0].buttons[7]) > 0 \
-        or abs(msg_data.joys[0].buttons[8]) > 0 \
-        or abs(msg_data.joys[0].buttons[9]) > 0 \
-        or abs(msg_data.joys[0].buttons[10]) > 0 \
-        or abs(msg_data.joys[0].buttons[11]) > 0):
-            return True
-        else:
-            return False
-    except:
-        print("error in getActive")
-
-
-
+def isActive():
+    global a1, a2, a3, a4, a5, a6, b1, b2, b3, b4, b5, b6, b7, b8, b9, b10, b11, b12
+    if (abs(a1) > 0 \
+    or abs(a2) > 0 \
+    or abs(a3) > 0 \
+    or abs(a4) > 0 \
+    or abs(a5) > 0 \
+    or abs(a6) > 0 \
+    or (True in {b1, b2, b3, b4, b5, b6, b7, b8, b9, b10, b11, b12})):
+        return True
+    else:
+        return False
 
 def main(data):
     global telem, last_active, last_throttle_change, last_mode, a1, a2, a3, a4, a5, a6, b1, b2, b3, b4, b5, b6, b7, b8, b9, b10, b11, b12
@@ -113,7 +97,7 @@ def main(data):
     telem.source = data.source
 
     #wake from idle or set mode to idle
-    if isActive(data):
+    if isActive():
         last_active = data.header.stamp
         if telem.mode == IDLE:
             telem.mode = last_mode 
