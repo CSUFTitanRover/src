@@ -1,4 +1,4 @@
-float32 baseLat
-float32 baseLon
-float32 roverLat
-float32 roverLon
+string baseLat
+string baseLon
+string roverLat
+string roverLon

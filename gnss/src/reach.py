@@ -10,7 +10,7 @@ global rover
 
 def connect():
     global base_gps, rover
-    # connect to the Base Reach
+    '''    # connect to the Base Reach
     base = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     while True:
         try:
@@ -22,9 +22,9 @@ def connect():
         except:
             print("Connecting to Base Reach")
             time.sleep(2)
-
+    '''
     # connect to the Rover Reach
-    print "cocksucker"
+    #print "cocksucker"
     rover = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     while True:
         try:
@@ -43,10 +43,10 @@ def main():
             if data is not None:
 #                msg.baseLat = float(base_gps[0])
  #               msg.baseLon = float(base_gps[1])
-		msg.baseLat = 33.881873
-		msg.baseLon = -117.882779
-                msg.roverLat = float(data[4])
-                msg.roverLon = float(data[5])
+		msg.baseLat = str(33.881873)
+		msg.baseLon = str(-117.882779)
+                msg.roverLat = str(float(data[4]))
+                msg.roverLon = str(float(data[5]))
                 gps_pub.publish(msg)
                 #print(msg)
                 rate.sleep()
