@@ -13,6 +13,7 @@ stat52 = False
 
 def armData(a5, a6, b5, b6, b7, b8):
     print("IMMA DO STUFF")
+    print(a5, a6, b5, b6, b7, b8)
     global stat1, stat4, stat51, stat52
     j1 = int(a5) #a5
     j4 = int(a6) #a6
