@@ -1,5 +1,5 @@
 import serial
-ser = serial.Serial("/dev/serial/by-id/usb-Silicon_Labs_Rover433_0001-if00-port0", baudrate=115200)
+ser = serial.Serial("/dev/serial/by-id/usb-Silicon_Labs_Stepper_9000-if00-port0", baudrate=115200)
 
 mapAxes = { 'J1' : {-1 : ('s05e', 's07e'), 1 : ('s04e', 's07e'), 0 : ('s06e', 's06e')},
             'J2' : {-1 : ('s15e', 's17e'), 1 : ('s14e', 's17e'), 0 : ('s16e', 's16e')}
