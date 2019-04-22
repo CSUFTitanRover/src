@@ -1,8 +1,0 @@
-prefix=/usr/local
-
-Name: ce30_driver_ros
-Description: Description of ce30_driver_ros
-Version: 0.0.0
-Cflags: 
-Libs: -L/usr/local/lib 
-Requires: 

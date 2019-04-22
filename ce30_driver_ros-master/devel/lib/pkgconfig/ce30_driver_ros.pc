@@ -1,8 +1,0 @@
-prefix=/home/nvidia/catkin_ws/src/ce30_driver_ros-master/devel
-
-Name: ce30_driver_ros
-Description: Description of ce30_driver_ros
-Version: 0.0.0
-Cflags: 
-Libs: -L/home/nvidia/catkin_ws/src/ce30_driver_ros-master/devel/lib 
-Requires: 
