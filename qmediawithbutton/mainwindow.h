@@ -54,6 +54,7 @@ private:
     QUrl c2url = QUrl("http://192.168.1.2:8082/");
     QUrl c3url = QUrl("http://192.168.1.2:8083/");
     QUrl c4url = QUrl("http://192.168.1.2:8084/");
+    QUrl q;
     QWebView loadqual;
     int cameraPlay = 0;
 };

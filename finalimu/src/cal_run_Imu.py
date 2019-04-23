@@ -72,7 +72,7 @@ while not bno.begin():
 def magToTrue(h):
     return (h + magneticDeclination) % 360
 
-fileIn = open('calibrationData.txt','r')
+fileIn = open('/home/nvidia/catkin_ws/src/finalimu/src/calibrationData.txt','r')
 data = fileIn.read().splitlines()
 for i in range(len(data)):
     data[i] = int(data[i])

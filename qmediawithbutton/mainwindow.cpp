@@ -124,10 +124,11 @@ MainWindow::MainWindow(QWidget *parent) :
 
     // Links RTSP to Video
     //for testing:      rtsp://184.72.239.149/vod/mp4:BigBuckBunny_115k.mov
-    QNetworkRequest requestRtspc1(QUrl("rtsp://wowzaec2demo.streamlock.net/vod/mp4:BigBuckBunny_115k.mov"));
-    QNetworkRequest requestRtspc2(QUrl("rtsp://b1.dnsdojo.com:1935/live/sys3.stream"));
-    QNetworkRequest requestRtspc3(QUrl("rtsp://wowzaec2demo.streamlock.net/vod/mp4:BigBuckBunny_115k.mov"));
-    QNetworkRequest requestRtspc4(QUrl("rtsp://b1.dnsdojo.com:1935/live/sys3.stream"));
+    //for testing:      rtsp://b1.dnsdojo.com:1935/live/sys3.stream
+    QNetworkRequest requestRtspc1(QUrl("http://192.168.1.2:8081"));
+    QNetworkRequest requestRtspc2(QUrl("http://192.168.1.2:8082"));
+    QNetworkRequest requestRtspc3(QUrl("http://192.168.1.2:8083"));
+    QNetworkRequest requestRtspc4(QUrl("http://192.168.1.2:8084"));
 
     //connect network to video stream
     _player1->setMedia(requestRtspc1);
@@ -140,6 +141,12 @@ MainWindow::MainWindow(QWidget *parent) :
     _player2->play();
     _player3->play();
     _player4->play();
+
+    loadqual.load(QUrl("http://192.168.1.2:8080/1/config/set?stream_quality=0"));
+    loadqual.load(QUrl("http://192.168.1.2:8080/2/config/set?stream_quality=0"));
+    loadqual.load(QUrl("http://192.168.1.2:8080/3/config/set?stream_quality=0"));
+    loadqual.load(QUrl("http://192.168.1.2:8080/4/config/set?stream_quality=0"));
+
 
 
 
@@ -176,15 +183,20 @@ void MainWindow::setCamera1() {
         layout->removeItem(layout->itemAtPosition(2,0));
         delete layout->itemAtPosition(2,0);
 
+
         if(cameraPlay == 2) {
             cameraWidget2->setVisible(false);
+            q = QUrl("http://192.168.1.2:8080/2/config/set?stream_quality=0");
         }
         else if(cameraPlay == 3) {
             cameraWidget3->setVisible(false);
+            q = QUrl("http://192.168.1.2:8080/3/config/set?stream_quality=0");
         }
         else if(cameraPlay == 4) {
             cameraWidget4->setVisible(false);
+            q = QUrl("http://192.168.1.2:8080/4/config/set?stream_quality=0");
         }
+        loadqual.load(q);
 
 
         layout->addWidget(cameraWidget1,2,0,3,16); //last digit was 16
@@ -231,13 +243,17 @@ void MainWindow::setCamera2() {
         //layout->removeWidget(layout->itemAtPosition(2, 0)->widget()); //delete if not functional
         if(cameraPlay == 1) {
             cameraWidget1->setVisible(false);
+            q = QUrl("http://192.168.1.2:8080/1/config/set?stream_quality=0");
         }
         else if(cameraPlay == 3) {
             cameraWidget3->setVisible(false);
+            q = QUrl("http://192.168.1.2:8080/3/config/set?stream_quality=0");
         }
         else if(cameraPlay == 4) {
             cameraWidget4->setVisible(false);
+            q = QUrl("http://192.168.1.2:8080/4/config/set?stream_quality=0");
         }
+        loadqual.load(q);
 
 
         layout->addWidget(cameraWidget2,2,0,3,16);
@@ -284,13 +300,18 @@ void MainWindow::setCamera3() {
 
         if(cameraPlay == 1) {
             cameraWidget1->setVisible(false);
+            q = QUrl("http://192.168.1.2:8080/1/config/set?stream_quality=0");
         }
         else if(cameraPlay == 2) {
             cameraWidget2->setVisible(false);
+            q = QUrl("http://192.168.1.2:8080/2/config/set?stream_quality=0");
         }
         else if(cameraPlay == 4) {
             cameraWidget4->setVisible(false);
+            q = QUrl("http://192.168.1.2:8080/4/config/set?stream_quality=0");
         }
+        loadqual.load(q);
+
         layout->addWidget(cameraWidget3,2,0,3,16);
         cameraWidget3->setVisible(true);
         //_player3->play();
@@ -334,13 +355,17 @@ void MainWindow::setCamera4() {
 
         if(cameraPlay == 1) {
             cameraWidget1->setVisible(false);
+            q = QUrl("http://192.168.1.2:8080/1/config/set?stream_quality=0");
         }
         else if(cameraPlay == 3) {
             cameraWidget3->setVisible(false);
+            q = QUrl("http://192.168.1.2:8080/3/config/set?stream_quality=0");
         }
         else if(cameraPlay == 2) {
             cameraWidget2->setVisible(false);
+            q = QUrl("http://192.168.1.2:8080/2/config/set?stream_quality=0");
         }
+        loadqual.load(q);
         layout->addWidget(cameraWidget4,2,0,3,16);
         cameraWidget4->setVisible(true);
         //_player4->play();

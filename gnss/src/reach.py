@@ -3,10 +3,17 @@ import time
 import socket
 import rospy
 import sys
+import signal
 from gnss.msg import gps
 
 global base_gps
 global rover
+
+def sigint_handler(signum, frame):
+    print 'CTRL+C Pressed!'
+    exit()
+
+signal.signal(signal.SIGINT, sigint_handler)
 
 def connect():
     global base_gps, rover
@@ -17,6 +24,9 @@ def connect():
             base.connect(('base_tr.local', 9092))
             data = base.recv(256).split(" ")
             base_gps = (data[4], data[5])
+	    msg.baseLat = str(data[4])
+            msg.baseLon = str(data[5])
+
             base.close()
             break
         except:
@@ -40,10 +50,12 @@ def main():
         try:
             data = rover.recv(256).split(" ")
             if data is not None:
-                msg.baseLat = float(base_gps[0])
-                msg.baseLon = float(base_gps[1])
-                msg.roverLat = float(data[4])
-                msg.roverLon = float(data[5])
+#                msg.baseLat = float(base_gps[0])
+ #               msg.baseLon = float(base_gps[1])
+		#msg.baseLat = str(33.881873)
+		#msg.baseLon = str(-117.882779)
+                msg.roverLat = str(float(data[4]))
+                msg.roverLon = str(float(data[5]))
                 gps_pub.publish(msg)
                 #print(msg)
                 rate.sleep()
