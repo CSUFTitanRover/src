@@ -123,10 +123,11 @@ class MultiJoyParser(object):
             rospy.loginfo('joys retrieved and published')
 
 if __name__=='__main__':
-    RSSI = 0
-    if(False and hostName != "tegra-ubuntu"): #toggle true/false for debuggingg
+    RSSI = -100
+    if(True and hostName != "tegra-ubuntu"): #toggle true/false for debuggingg
         threading.Thread(target=getRSSI).start()
 
     rospy.init_node('multijoy_node')
     parser=MultiJoyParser()
     rospy.spin()
+#usb-Silicon_Labs_CP2102_USB_to_UART_Bridge_Controller_0001-if00-port0
