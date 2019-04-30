@@ -114,7 +114,7 @@ class MultiJoyParser(object):
         print(msg)
 
         print(RSSI)
-        if(RSSI > -85) or hostName == "tegra-ubuntu":
+        if(RSSI > -80) or hostName == "tegra-ubuntu":
             self.multijoy_pub.publish(msg)
         else:
             putSock(packDEEZNUTZ(msg, 0)) #send to pi to send to radio
@@ -123,7 +123,7 @@ class MultiJoyParser(object):
             rospy.loginfo('joys retrieved and published')
 
 if __name__=='__main__':
-    RSSI = -100
+    RSSI = 0
     if(True and hostName != "tegra-ubuntu"): #toggle true/false for debuggingg
         threading.Thread(target=getRSSI).start()
 

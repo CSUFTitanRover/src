@@ -22,7 +22,7 @@ signal.signal(signal.SIGINT, sigint_handler)
 def fakeIt():
     global o, a, l
     offset_o = 0.1
-    offset_a = 0.05
+    offset_a = 3.05
     offset_l = 0.01
     while True:
         #fake IMU Posting data
@@ -32,7 +32,7 @@ def fakeIt():
 
         if o > 200 or o < 160:
             offset_o *= -1
-        if a > 40 or a < -20:
+        if a > 60 or a < -60:
             offset_a *= -1
         if l > 2 or l < -2:
             offset_l *= -1   
