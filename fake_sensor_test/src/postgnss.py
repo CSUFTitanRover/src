@@ -11,8 +11,8 @@ gps_pub = rospy.Publisher('/gnss', gps, queue_size=1)
 rospy.init_node('gnss')
 g = gps()
 
-g.baseLat = 33.881758
-g.baseLon = -117.882791
+g.baseLat = '33.881832'
+g.baseLon = '-117.882965'
 
 def sigint_handler(signum, frame):
     print 'CTRL+C Pressed!'
@@ -29,7 +29,8 @@ def fakeIt():
         if curr_pos[1] > -117.882611 or curr_pos[1] < -117.883346:
             percision_lon *= -1 
         curr_pos = (curr_pos[0] + percision_lat, curr_pos[1] + percision_lon)
-        g.roverLat, g.roverLon = curr_pos[0], curr_pos[1]
+        curr_pos = (33.881650, -117.883149)
+	g.roverLat, g.roverLon = str(curr_pos[0]), str(curr_pos[1])
         gps_pub.publish(g)
         time.sleep(.2)
 

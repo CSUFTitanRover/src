@@ -145,8 +145,9 @@ def main(data):
             if telem.armAttached and telem.mode in {BOTH, ARM}:
                 armMix.driveBoth(int(127*a3),int(127*a4))#j2, j3
                 pyarm.armData(a5, a6, b5, b6, b7, b8) #j1, j4, j51, j52
-        except:
+        except Exception as e:
             print("Mobility-main-drive error")
+            print(e)
 
 if __name__ == '__main__':
     try:
