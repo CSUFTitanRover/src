@@ -1,4 +1,5 @@
 <launch>
 <node pkg="mobility" type="lights.py" name="ros_lights"/>
 <node pkg="mobility" type="roverESC.py" name="roverESC"/>
+<node pkg="gnss" type="reach.py" name="gnss"/>
 </launch>

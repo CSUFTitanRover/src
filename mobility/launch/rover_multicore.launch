@@ -8,4 +8,5 @@
 <node pkg="aliencontrol" type="aliencontrol" name="aliencontrol_main">
     <param name="cmd" value="/home/nvidia/TitanRover2019/userInterface/Cerium/Cerium_Base_Station/listener.py"/>
 </node>
+<node pkg="gnss" type="reach.py" name="gnss"/>
 </launch>
