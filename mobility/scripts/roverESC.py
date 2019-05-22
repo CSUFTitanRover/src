@@ -10,7 +10,7 @@ import rospy, subprocess, sys
 from multijoy.msg import MultiJoy
 from mobility.msg import Status
 from sensor_msgs.msg import Joy
-'''# To import packages from different Directories
+# To import packages from different Directories
 rootDir = subprocess.check_output('locate TitanRover2019 | head -1', shell=True).strip().decode('utf-8')
 sys.path.insert(0, rootDir + '/build/resources/python-packages')
 from pysaber import DriveEsc
@@ -21,14 +21,17 @@ import pyarm
 # Instantiating The Class Object For PySabertooth
 wheels = DriveEsc(128, "mixed")
 armMix = DriveEsc(129, "notMixed")
-'''
+
 IDLE_TIMEOUT = 15 #seconds
 #use actual button numbers instead of 0-indexed array
-j1_b1, j1_b2, j1_b3, j1_b4, j1_b5, j1_b6, j1_b7, j1_b8, j1_b9, j1_b10, j1_b11, j1_b12
-j1_a1, j1_a2, j1_a3, j1_a4, j1_a5, j1_a6
-
-j2_b1, j2_b2, j2_b3, j2_b4, j2_b5, j2_b6, j2_b7, j2_b8, j2_b9, j2_b10, j2_b11, j2_b12
-j2_a1, j2_a2, j2_a3, j2_a4, j2_a5, j2_a6
+j1_b = [0 for i in range(13)]
+j1_a = [0.0 for i in range(7)]
+j2_b = [0 for i in range(13)]
+j2_a = [0.0 for i in range(7)]
+j1 = 0.0
+j4 = 0
+j51 = (0, 0)
+j52 = (0, 0)
 
 
 #comms source for reference (variables not used)
@@ -50,97 +53,53 @@ telem.source = -1
 telem.mode = MOBILITY
 telem.throttle = .3
 telem.armAttached = True
-
+njoys = 0
 #global variables
 last_mode = telem.mode
 last_active = last_throttle_change = 0
 def setStop(): #just set all values on both joysticks to 0
-    global j1_a1, j1_a2, j1_a3, j1_a4, j1_a5, j1_a6, j1_b1, j1_b2, j1_b3, j1_b4, j1_b5, j1_b6, j1_b7, j1_b8, j1_b9, j1_b10, j1_b11, j1_b12,\
-        j2_a1, j2_a2, j2_a3, j2_a4, j2_a5, j2_a6, j2_b1, j2_b2, j2_b3, j2_b4, j2_b5, j2_b6, j2_b7, j2_b8, j2_b9, j2_b10, j2_b11, j2_b12
-    j1_a1, j1_a2, j1_a3, j1_a4, j1_a5, j1_a6, j1_b1, j1_b2, j1_b3, j1_b4, j1_b5, j1_b6, j1_b7, j1_b8, j1_b9, j1_b10, j1_b11, j1_b12,\
-        j2_a1, j2_a2, j2_a3, j2_a4, j2_a5, j2_a6, j2_b1, j2_b2, j2_b3, j2_b4, j2_b5, j2_b6, j2_b7, j2_b8, j2_b9, j2_b10, j2_b11, j2_b12,\
-            j1, j4, j51, j52\
-        = 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+    global j1_a, j1_b, j2_a, j2_b, j1, j4, j51, j52
+    j1_a = [0 for i in range(len(j1_a))]
+    j1_b = [0 for i in range(len(j1_b))]
+    j2_a = [0 for i in range(len(j2_a))]
+    j2_b = [0 for i in range(len(j2_b))]
+    j1, j4 = 0, 0
+    j51 = (0, 0)
+    j52 = (0, 0)
 
 def setVals(joy_data):
-    global j1_a1, j1_a2, j1_a3, j1_a4, j1_a5, j1_a6, j1_b1, j1_b2, j1_b3, j1_b4, j1_b5, j1_b6, j1_b7, j1_b8, j1_b9, j1_b10, j1_b11, j1_b12,\
-        j2_a1, j2_a2, j2_a3, j2_a4, j2_a5, j2_a6, j2_b1, j2_b2, j2_b3, j2_b4, j2_b5, j2_b6, j2_b7, j2_b8, j2_b9, j2_b10, j2_b11, j2_b12, njoys
-    njoys = joy_data.njoys
-    j1_a1 = joy_data.joys[0].axes[0]
-    j1_a2 = joy_data.joys[0].axes[1] 
-    j1_a3 = joy_data.joys[0].axes[2] 
-    j1_a4 = joy_data.joys[0].axes[3] 
-    j1_a5 = joy_data.joys[0].axes[4] 
-    j1_a6 = joy_data.joys[0].axes[5] 
-    j1_b1 = joy_data.joys[0].buttons[0] 
-    j1_b2 = joy_data.joys[0].buttons[1] 
-    j1_b3 = joy_data.joys[0].buttons[2] 
-    j1_b4 = joy_data.joys[0].buttons[3] 
-    j1_b5 = joy_data.joys[0].buttons[4] 
-    j1_b6 = joy_data.joys[0].buttons[5] 
-    j1_b7 = joy_data.joys[0].buttons[6]
-    j1_b8 = joy_data.joys[0].buttons[7] 
-    j1_b9 = joy_data.joys[0].buttons[8] 
-    j1_b10 = joy_data.joys[0].buttons[9] 
-    j1_b11 = joy_data.joys[0].buttons[10]
-    j1_b12 = joy_data.joys[0].buttons[11]
-    j1 = int(j1_a5)
-    j4 = int(j1_a6)
-    j51 = (j1_b6, j1_b8)
-    j52 = (j1_b5, j1_b7)
+    global j1_a, j1_b, j2_a, j2_b, j1, j4, j51, j52, njoys
+    njoys = joy_data.njoys.data
+    for i in range(1, len(j1_a)):
+        j1_a[i] = joy_data.joys[0].axes[i-1]
+    for i in range(1, len(j1_b)):
+        j1_b[i] = joy_data.joys[0].buttons[i-1]
 
-    if joy_data.njoys == 2:
-        j2_a1 = joy_data.joys[1].axes[0]
-        j2_a2 = joy_data.joys[1].axes[1] 
-        j2_a3 = joy_data.joys[1].axes[2] 
-        j2_a4 = joy_data.joys[1].axes[3] 
-        j2_a5 = joy_data.joys[1].axes[4] 
-        j2_a6 = joy_data.joys[1].axes[5] 
-        j2_b1 = joy_data.joys[1].buttons[0] 
-        j2_b2 = joy_data.joys[1].buttons[1] 
-        j2_b3 = joy_data.joys[1].buttons[2] 
-        j2_b4 = joy_data.joys[1].buttons[3] 
-        j2_b5 = joy_data.joys[1].buttons[4] 
-        j2_b6 = joy_data.joys[1].buttons[5] 
-        j2_b7 = joy_data.joys[1].buttons[6]
-        j2_b8 = joy_data.joys[1].buttons[7] 
-        j2_b9 = joy_data.joys[1].buttons[8] 
-        j2_b10 = joy_data.joys[1].buttons[9] 
-        j2_b11 = joy_data.joys[1].buttons[10]
-        j2_b12 = joy_data.joys[1].buttons[11]
-        j1 = ((-1*j2_b3)+j2_b4)
-        j4 = int(j2_a5)
-        j51 = (j2_b5, j2_b6)
-        j52 = (j2_b1, j2_b2)
+    j1 = int(j1_a[5])
+    j4 = int(j1_a[6])
+    j51 = (j1_b[6], j1_b[8])
+    j52 = (j1_b[5], j1_b[7])
+
+    if njoys == 2:
+        print("Assigning joy 2")
+        for i in range(1, len(j2_a)):
+            j2_a[i] = joy_data.joys[1].axes[i-1]
+        for i in range(1, len(j2_b)):
+            j2_b[i] = joy_data.joys[1].buttons[i-1]
+        j1 = ((-1*j2_b[3])+j2_b[4])
+        j4 = int(j2_a[5])
+        j51 = (j2_b[5], j2_b[6])
+        j52 = (j2_b[1], j2_b[2])
 
 
 
 def isActive():
-    global j1_a1, j1_a2, j1_a3, j1_a4, j1_a5, j1_a6, j1_b1, j1_b2, j1_b3, j1_b4, j1_b5, j1_b6, j1_b7, j1_b8, j1_b9, j1_b10, j1_b11, j1_b12,\
-        j2_a1, j2_a2, j2_a3, j2_a4, j2_a5, j2_a6, j2_b1, j2_b2, j2_b3, j2_b4, j2_b5, j2_b6, j2_b7, j2_b8, j2_b9, j2_b10, j2_b11, j2_b12
-    if (abs(j1_a1) > 0 \
-    or abs(j1_a2) > 0 \
-    or abs(j1_a3) > 0 \
-    or abs(j1_a4) > 0 \
-    or abs(j1_a5) > 0 \
-    or abs(j1_a6) > 0 \
-    or abs(j2_a1) > 0 \
-    or abs(j2_a2) > 0 \
-    or abs(j2_a3) > 0 \
-    or abs(j2_a4) > 0 \
-    or abs(j2_a5) > 0 \
-    or abs(j2_a6) > 0 \
-    or (True in {j1_b1, j1_b2, j1_b3, j1_b4, j1_b5, j1_b6, j1_b7, j1_b8, j1_b9, j1_b10, j1_b11, j1_b12,\
-        j2_b1, j2_b2, j2_b3, j2_b4, j2_b5, j2_b6, j2_b7, j2_b8, j2_b9, j2_b10, j2_b11, j2_b12})):
-        return True
-    else:
-        return False
+    global j1_a, j1_b, j2_a, j2_b
+    return not all(v == 0.0 for v in j1_a or j1_b or j2_a or j2_b)
 
 def main(data):
-    global telem, last_active, last_throttle_change, last_mode, njoys
-    global j1_a1, j1_a2, j1_a3, j1_a4, j1_a5, j1_a6, j1_b1, j1_b2, j1_b3, j1_b4, j1_b5, j1_b6, j1_b7, j1_b8, j1_b9, j1_b10, j1_b11, j1_b12,\
-        j2_a1, j2_a2, j2_a3, j2_a4, j2_a5, j2_a6, j2_b1, j2_b2, j2_b3, j2_b4, j2_b5, j2_b6, j2_b7, j2_b8, j2_b9, j2_b10, j2_b11, j2_b12,\
-            j1, j2, j51, j52
+    global telem, last_active, last_throttle_change, last_mode, njoys,\
+        j1_a, j1_b, j2_a, j2_b, j1, j4, j51, j52
 
     setVals(data)
     telem.source = data.source
@@ -157,44 +116,50 @@ def main(data):
         telem_pub.publish(telem)
 
     #set mode
-    if(j1_b9):
-        if(j1_b3):
+    if(j1_b[9]):
+        if(j1_b[3]):
             telem.mode = PAUSE
-        elif(j1_b2):
+        elif(j1_b[2]):
             telem.mode = MOBILITY
-        elif(j1_b4):
+        elif(j1_b[4]):
             telem.mode = ARM
             setStop()
-        elif(j1_b1):
+        elif(j1_b[1]):
             telem.mode = BOTH
         telem_pub.publish(telem)
     else:
         #single key presses for throttle
-        if(j1_b4 and (telem.throttle < .95) and ((rospy.Time.now() - last_throttle_change) > rospy.Duration(0.25))):
+        if(j1_b[4] and (telem.throttle < .95) and ((rospy.Time.now() - last_throttle_change) > rospy.Duration(0.25))):
             telem.throttle += 0.1
             last_throttle_change = rospy.Time.now()
-        elif (j1_b2 and (telem.throttle > .25) and ((rospy.Time.now() - last_throttle_change) > rospy.Duration(0.25))):
+        elif (j1_b[2] and (telem.throttle > .25) and ((rospy.Time.now() - last_throttle_change) > rospy.Duration(0.25))):
             telem.throttle -= 0.1
             last_throttle_change = rospy.Time.now()
         telem_pub.publish(telem)
         try:
             if telem.mode in {MOBILITY, BOTH}:
                 #turn in place
-                if j1_b1:
+                if j1_b[1]:
+                    print("Turn left")
                     wheels.driveBoth(0,-63)
-                elif j1_b3:
+                elif j1_b[3]:
+                    print("Turn right")
                     wheels.driveBoth(0,63)
                 else:
                     #normal movement
                     if telem.source is 3:
-                        wheels.driveBoth(int(j1_a2),int(j1_a1))
+                        print("APP DRIVE", j1_a[2], j1_a[1])
+                        wheels.driveBoth(int(j1_a[2]),int(j1_a[1]))
                     else:
-                        wheels.driveBoth(int(telem.throttle*127*j1_a2),int(-1 * telem.throttle*127*j1_a1))
+                        print("F710 DRIVE", j1_a[2], -1*j1_a[1])
+                        wheels.driveBoth(int(telem.throttle*127*j1_a[2]),int(-1 * telem.throttle*127*j1_a[1]))
             if njoys == 2 and telem.mode in {BOTH, ARM}:
-                armMix.driveBoth(int(127*j2_a1),int(127*j2_a2))#j2, j3
+                print("Attack 3d", j2_a[1], j2_a[2], j1, j4, j51, j52)
+                armMix.driveBoth(int(127*j2_a[1]),int(127*j2_a[2]))#j2, j3
                 pyarm.armData(j1, j4, j51, j52) #j1, j4, j51, j52
-            if telem.armAttached and telem.mode in {BOTH, ARM}:
-                armMix.driveBoth(int(127*a3),int(127*a4))#j2, j3
+            elif telem.armAttached and telem.mode in {BOTH, ARM}:
+                print("F710", j1_a[3], j1_a[4], j1, j4, j51, j52)
+                armMix.driveBoth(int(127*j1_a[3]),int(127*j1_a[4]))#j2, j3
                 pyarm.armData(j1, j4, j51, j52) #j1, j1, j4, j51, j52
         except Exception as e:
             print("Mobility-main-drive error")
