@@ -39,6 +39,7 @@ ERROR = -1
 LOCAL = 0
 GHZ = 1
 MHZ = 2
+DRIVER = 3
 
 #modes
 PAUSE = -1 #LS + B3
@@ -46,11 +47,11 @@ IDLE = 0
 MOBILITY = 1 #LS + B2
 ARM = 2    #LS + B4
 BOTH = 3  #R2 + B1
-
+AUTO = 4
 #instantiate publisher structure
 telem = Status()
 telem.source = -1
-telem.mode = MOBILITY
+telem.mode = PAUSE
 telem.throttle = .3
 telem.armAttached = True
 njoys = 0
@@ -126,6 +127,8 @@ def main(data):
             setStop()
         elif(j1_b[1]):
             telem.mode = BOTH
+        elif(telem.source == DRIVER):
+            telem.mode = AUTO
         telem_pub.publish(telem)
     else:
         #single key presses for throttle
@@ -153,11 +156,15 @@ def main(data):
                     else:
                         print("F710 DRIVE", j1_a[2], -1*j1_a[1])
                         wheels.driveBoth(int(telem.throttle*127*j1_a[2]),int(-1 * telem.throttle*127*j1_a[1]))
+            elif telem.mode in {AUTO}:
+                print("AUTO: ", j1_a[1], j1_a[2])
+                wheels.driveBoth(j1_a[1] , j1_a[2])
+
             if njoys == 2 and telem.mode in {BOTH, ARM}:
                 print("Attack 3d", j2_a[1], j2_a[2], j1, j4, j51, j52)
                 armMix.driveBoth(int(127*j2_a[1]),int(127*j2_a[2]))#j2, j3
                 pyarm.armData(j1, j4, j51, j52) #j1, j4, j51, j52
-            elif telem.armAttached and telem.mode in {BOTH, ARM}:
+            elif njoys ==1 and telem.armAttached and telem.mode in {BOTH, ARM}:
                 print("F710", j1_a[3], j1_a[4], j1, j4, j51, j52)
                 armMix.driveBoth(int(127*j1_a[3]),int(127*j1_a[4]))#j2, j3
                 pyarm.armData(j1, j4, j51, j52) #j1, j1, j4, j51, j52
