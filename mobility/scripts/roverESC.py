@@ -96,12 +96,11 @@ def setVals(joy_data):
 
 def isActive():
     global j1_a, j1_b, j2_a, j2_b
-    return not all(v == 0.0 for v in j1_a or j1_b or j2_a or j2_b)
+    return not all(v == 0.0 for v in j1_a and j1_b and j2_a and j2_b)
 
 def main(data):
     global telem, last_active, last_throttle_change, last_mode, njoys,\
         j1_a, j1_b, j2_a, j2_b, j1, j4, j51, j52
-
     setVals(data)
     telem.source = data.source
 
@@ -117,6 +116,10 @@ def main(data):
         telem_pub.publish(telem)
 
     #set mode
+    if(telem.source == DRIVER):
+        telem.mode = AUTO
+        telem_pub.publish(telem)
+
     if(j1_b[9]):
         if(j1_b[3]):
             telem.mode = PAUSE
@@ -127,8 +130,6 @@ def main(data):
             setStop()
         elif(j1_b[1]):
             telem.mode = BOTH
-        elif(telem.source == DRIVER):
-            telem.mode = AUTO
         telem_pub.publish(telem)
     else:
         #single key presses for throttle

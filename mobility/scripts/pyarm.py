@@ -14,7 +14,6 @@ stat52 = False
 def armData(j1, j4, j51, j52):
     global stat1, stat4, stat51, stat52
     '''Original controls used for only gamepad use
-    print("IMMA DO STUFF")
     print(a5, a6, b5, b6, b7, b8)
     j1 = int(a5) #a5
     j4 = int(a6) #a6
