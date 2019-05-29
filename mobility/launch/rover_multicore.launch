@@ -5,8 +5,6 @@
 <node pkg="mobility" type="lights.py" name="ros_lights"/>
 <node pkg="mobility" type="roverESC.py" name="roverESC"/>
 <node pkg="mobility" type="mhzRx.py" name="backup_Radio"/>
-<node pkg="aliencontrol" type="aliencontrol" name="aliencontrol_main">
-    <param name="cmd" value="/home/nvidia/TitanRover2019/userInterface/Cerium/Cerium_Base_Station/listener.py"/>
-</node>
+<node name="cerium" pkg="cerium" type="cerium_rover.sh" output="screen"/>
 <node pkg="gnss" type="reach.py" name="gnss"/>
 </launch>
