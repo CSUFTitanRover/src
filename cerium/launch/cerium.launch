@@ -1,6 +1,3 @@
-
-
-
 <launch>
   <node name="cerium" pkg="cerium" type="cerium.sh" output="screen"/>
 </launch>
