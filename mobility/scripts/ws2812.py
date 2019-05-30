@@ -35,6 +35,7 @@ IDLE = 0
 MOBILITY = YELLOW #R2 + L1
 ARM = BLUE_GREEN    #R2 + 3
 BOTH = ORANGE # R2 + 1
+AUTO = PINK
 
 #COMMS = COLOR
 LOCAL_COLOR = BLUE #any controller plugged into the rover
@@ -143,12 +144,13 @@ class Rover_Status_Lights(object):
 					1 : (self.set_front, MOBILITY),
 					2 : (self.set_front, ARM),
 					3 : (self.set_front, BOTH),
+					4 : (self.set_front, AUTO)
 						}
 		self.comms = {
 					0 : (self.set_rear, LOCAL_COLOR),
 					1 : (self.set_rear, GHZ_COLOR),
 					2 : (self.set_rear, MHZ_COLOR),
-					3 : (self.set_rear, PINK)
+					3 : (self.set_rear, AUTO)
 					}
 		self.comms[new_source][0](*self.comms[new_source][1])
 		self.dispatch[new_mode][0](*self.dispatch[new_mode][1])

@@ -155,7 +155,7 @@ def main(data):
                         print("APP DRIVE", j1_a[2], j1_a[1])
                         wheels.driveBoth(int(j1_a[2]),int(j1_a[1]))
                     else:
-                        print("F710 DRIVE", j1_a[2], -1*j1_a[1])
+                        print("F710 DRIVE", j1_a[1], j1_a[2])
                         wheels.driveBoth(int(telem.throttle*127*j1_a[2]),int(-1 * telem.throttle*127*j1_a[1]))
             elif telem.mode in {AUTO}:
                 print("AUTO: ", j1_a[1], j1_a[2])
