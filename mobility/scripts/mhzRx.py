@@ -84,7 +84,10 @@ type mismatch or by ROS because of formatting that doesn't match the message typ
 '''
 def mobility_action(message): #object to bytes
     try:
-        data = unpack('2i18b2i18b', message)
+        if len(message > 30):
+            data = unpack('2i18b2i18b', message)
+        elif len(message < 30):
+            data = unpack('2i18b', message)
         print(time())
         print(data[0])
         if int(time()) != data[0]:
@@ -103,13 +106,14 @@ def mobility_action(message): #object to bytes
             t_joy.buttons.append(data[i])
         msg.joys.append(t_joy) #append first joystick
         #I'm gonna be real verbose with this I'll fix it later
-        t_joy2 = Joy()
-        t_joy2.header = t_joy.header #keep the same header
-        for i in range(21, 27):
-            t_joy2.axes.append(float(float(data[i]) / float(127)))
-        for i in range(27, 39):
-            t_joy2.buttons.append(data[i])
-        msg.joys.append(t_joy2) #append first joystick
+        if len(data) > 21:
+            t_joy2 = Joy()
+            t_joy2.header = t_joy.header #keep the same header
+            for i in range(21, 27):
+                t_joy2.axes.append(float(float(data[i]) / float(127)))
+            for i in range(27, 39):
+                t_joy2.buttons.append(data[i])
+            msg.joys.append(t_joy2) #append first joystick
         multijoy_pub.publish(msg)
         print(msg)
         print("PUBLISHED")
