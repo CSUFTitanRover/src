@@ -19,17 +19,6 @@ def getRSSI():
         signal = int('-' + ''.join(i for i in signal if i.isdigit()))
         RSSI = signal
 
-def putRF(data):                            #arguments to make function more self-contained and function-like
-    rf_uart = serial.Serial('/dev/serial/by-id/usb-Silicon_Labs_Base433_0001-if00-port0', 19200, timeout=.01)
-    rf_uart.setDTR(True)                    #if the extra pins on the ttl usb are connected to m0 & m1 on the ebyte module
-    rf_uart.setRTS(True)                    #then these two lines will send low logic to both which puts the module in transmit mode 0
-
-    if not rf_uart.cts:                     #Check if both send and receive buffers are empty
-        rf_uart.write(b's' + data + b'f')   #start byte + payload + stop byte
-        rf_uart.flush() 
-        return len(data)                 #waits until all data is written
-    else:
-        return -1
 
 def putSock(oData):
     try:
