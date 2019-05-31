@@ -13,10 +13,12 @@ from sensor_msgs.msg import Joy
 from mobility.msg import Status
 from struct import pack, unpack
 from time import sleep, time
+from gnss.msg import gps
+
 rf_uart = serial.Serial('/dev/serial/by-id/usb-Silicon_Labs_Rover433_0001-if00-port0', 19200, timeout=None)
 rf_uart.setDTR(True) #if the extra pins on the ttl usb are connected to m0 & m1 on the ebyte module
 rf_uart.setRTS(True) #then these two lines will send low logic to both which puts the module in transmit mod$
-
+__gps = (0.0, 0.0)
 '''
 FUNCTION: putRF
 ARGS:
@@ -120,8 +122,29 @@ def mobility_action(message): #object to bytes
     except:
         print("Error in D")
 
+def setGps(data):
+    '''
+    Description:
+        Retrieves current GPS location, sets self.__gps 
+    Args:
+        None
+    Returns:
+        Nothing
+    '''
+    try:
+        __gps = (float(data.roverLat), float(data.roverLon))
+        #print("setGps ", self.__gps)
+    except:
+        print("GPS error")
+
+
 def send_gps(data):
+    global __gps
     print("gonna send gps")
+    rospy.Subscriber("gnss", gps, setGps)
+
+    __gps = (float(data.roverLat), float(data.roverLon))
+
     gps = pack("2f", float(123.4), float(567.8))
     putRF(0b01, gps)
 
