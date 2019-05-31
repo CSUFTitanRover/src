@@ -52,7 +52,7 @@ add_message_files(
   FILES
   Status.msg
   Mobility.msg
-  Arm.msg
+  driver_Status.msg
   Mode.msg
 )
 
