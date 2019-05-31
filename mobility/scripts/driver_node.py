@@ -15,13 +15,13 @@ import math
 import numpy as np # remove if no longer needed
 from decimal import Decimal
 import rospy
-from pysaber import DriveEsc
+# 5/30 10:49pmfrom pysaber import DriveEsc
 from gnss.msg import gps
 from finalimu.msg import fimu
 from multijoy.msg import MultiJoy
 from sensor_msgs.msg import Joy
 from mobility.msg import driver_Status
-wheels = DriveEsc(128, "mixed")
+# 5/30 10:49pm wheels = DriveEsc(128, "mixed")
 
 MINFORWARDSPEED = 20
 MAXFORWARDSPEED = 30
@@ -250,7 +250,7 @@ class Driver:
             self.telecommand.njoys = 1
             self.t_joy.header = self.telecommand.header   #copy multijoy timestamp
             self.t_joy.axes.append(int(self.__motor1 + self.__pitch * self.__motor1 / 60)/2)        #only set the motors for driving
-            self.t_joy.axes.append(int(self.__motor2 + self.__pitch * self.__motor2 / 60)/2))
+            self.t_joy.axes.append(int(self.__motor2 + self.__pitch * self.__motor2 / 60)/2)
             for i in range(4):          #all other values set to 0
                 self.t_joy.axes.append(0)
             for i in range(18):
