@@ -162,7 +162,6 @@ DESCRIPTION: checks op_code and calls the appropriate function.
 '''
 def update(op_code, message):
     dispatch = {
-                -1 : print,
                 0 : mobility_action, #Mobility command
                 1 : send_gps, #request for GPS
                     }
