@@ -103,7 +103,7 @@ class MultiJoyParser(object):
         print(msg)
 
         print(RSSI)
-        if(RSSI > -80) or hostName == "tegra-ubuntu":
+        if(RSSI > -90) or hostName == "tegra-ubuntu":
             self.multijoy_pub.publish(msg)
         else:
             putSock(packDEEZNUTZ(msg, 0)) #send to pi to send to radio
