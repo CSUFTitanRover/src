@@ -4,5 +4,4 @@
 <node pkg="master_sync_fkie" type="master_sync" name="master_sync" output="screen" launch-prefix="xterm -e"/>
 <include file="/home/roverbase/catkin_ws/src/multijoy/launch/multijoy2.launch"/>
 <node name="cerium" pkg="cerium" type="cerium_base.sh" output="screen"/>
-<node pkg="gnss" type="reach.py" name="gnss"/>
 </launch>
