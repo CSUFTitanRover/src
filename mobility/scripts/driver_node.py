@@ -9,7 +9,6 @@
 #         the Rover will drive to this point.
 #         Give a heading, the Rover will rotate in place to face this direction.
 ######################################################################################
-import time
 import sys
 import math
 import numpy as np # remove if no longer needed
@@ -21,6 +20,7 @@ from finalimu.msg import fimu
 from multijoy.msg import MultiJoy
 from sensor_msgs.msg import Joy
 from mobility.msg import driver_Status
+from time import time, sleep
 # 5/30 10:49pm wheels = DriveEsc(128, "mixed")
 
 MINFORWARDSPEED = 20
@@ -255,8 +255,8 @@ class Driver:
                 self.t_joy.axes.append(0)
             for i in range(18):
                 self.t_joy.buttons.append(0)
-            self.telecommand.joys.append(t_joy)
-            self.driver_pub.publish(telecommand)
+            self.telecommand.joys.append(self.t_joy)
+            self.driver_pub.publish(self.telecommand)
 
         except:
             print("Error Sending to PySaber")
@@ -352,7 +352,7 @@ class Driver:
                 motor2 = -ROTATESPEED
             motor1 = 0
             self.sendMotors()
-            time.sleep(0.04)
+            sleep(0.04)
             self.setHeading()
             self.setHeadingDifference()
             #self.setDeltaDirection()
@@ -393,9 +393,9 @@ class Driver:
 
             self.sendMotors()
             print("------------------------------------------------")
-            print("destWaypoint: ", self.__nextWaypoint, "\ncurrentGPS: ", self.__gps, "\ndist(cm): ", self.__distance, "\ncurrentHeading: ", self.__heading, "\ntargetHeading: ", self.__targetHeading, "\nmotor1: ", self.__motor1, "\nmotor2: ", self.__motor2, "\nclockwise: ", self.__clockwise, "\nheadingDiff: ", self.__headingDifference, "\ntime: ", int(time.time()), "\n")    
+            print("destWaypoint: ", self.__nextWaypoint, "\ncurrentGPS: ", self.__gps, "\ndist(cm): ", self.__distance, "\ncurrentHeading: ", self.__heading, "\ntargetHeading: ", self.__targetHeading, "\nmotor1: ", self.__motor1, "\nmotor2: ", self.__motor2, "\nclockwise: ", self.__clockwise, "\nheadingDiff: ", self.__headingDifference, "\ntime: ", int(time()), "\n")    
             print("------------------------------------------------")
-            time.sleep(0.04)
+            sleep(0.04)
             rospy.Subscriber("gnss", gps, self.setGps)
             rospy.Subscriber("imu", fimu, self.setHeading)            
             #print(self.__heading, self.__gps)
