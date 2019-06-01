@@ -25,11 +25,14 @@ def update_mode(msg_data):
     source = msg_data.source
 
 def update_lights():
-    status = Rover_Status_Lights(60)
-    global mode
-    while not rospy.is_shutdown():
-        status.update(mode, source)
-    status.set_all(0, 0, 0)
+    try:
+        status = Rover_Status_Lights(60)
+        global mode
+        while not rospy.is_shutdown():
+            status.update(mode, source)
+        status.set_all(0, 0, 0)
+        except Exception as e:
+        print(e)
 
 
 if __name__ == '__main__':

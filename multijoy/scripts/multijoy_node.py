@@ -25,15 +25,16 @@ def putSock(oData):
         port = 8888  # Make sure it's within the > 1024 $$ <65535 range
         rover = "192.168.1.2"
         antenna = "192.168.1.168"
-        s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         print("s")
         s.connect((antenna, port))
         print("connected")
         s.send(oData)
         print('Sent: ' + oData)
         s.close()
-    except:
+    except Exception as e:
         print("Error in putSock()")
+        print(e)
 
 def packDEEZNUTZ(message, joyNum): #object to bytes
     try:
@@ -103,7 +104,7 @@ class MultiJoyParser(object):
         print(msg)
 
         print(RSSI)
-        if(RSSI > -80) or hostName == "tegra-ubuntu":
+        if(RSSI > -90) or hostName == "tegra-ubuntu":
             self.multijoy_pub.publish(msg)
         else:
             putSock(packDEEZNUTZ(msg, 0)) #send to pi to send to radio
