@@ -29,9 +29,12 @@ def update_lights():
         status = Rover_Status_Lights(60)
         global mode
         while not rospy.is_shutdown():
-            status.update(mode, source)
+            if mode == 69:
+                status.set_all(BALL_MOTHERFUCKER)
+            else:
+                status.update(mode, source)
         status.set_all(0, 0, 0)
-        except Exception as e:
+    except Exception as e:
         print(e)
 
 

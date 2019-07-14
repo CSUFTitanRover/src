@@ -94,7 +94,7 @@ def mobility_action(message): #object to bytes
         print(data[0])
         if int(time()) != data[0]:
             print("STALE COMMAND")
-            return
+            #return
         global multijoy_pub
         msg = MultiJoy()
         msg.source = 2
